@@ -66,8 +66,8 @@ The EML reader supports MIME 1.0 encoded files</Description>
     <AssemblyOriginatorKeyFile>MsgReader.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="OpenMcdf, Version=2.1.6.28924, Culture=neutral, PublicKeyToken=fdbb1629d7c00800, processorArchitecture=MSIL">
-      <HintPath>..\packages\OpenMcdf.2.1.6.28924\lib\OpenMcdf.dll</HintPath>
+    <Reference Include="OpenMcdf, Version=2.2.0.1, Culture=neutral, PublicKeyToken=fdbb1629d7c00800, processorArchitecture=MSIL">
+      <HintPath>..\packages\OpenMcdf.2.2.0.1\lib\net40\OpenMcdf.dll</HintPath>
     </Reference>
     <Reference Include="RtfPipe, Version=1.0.0.0, Culture=neutral, PublicKeyToken=c6a4b64ced45dbf2, processorArchitecture=MSIL">
       <HintPath>..\packages\RtfPipe-Signed.0.7.0.3\lib\RtfPipe.dll</HintPath>
