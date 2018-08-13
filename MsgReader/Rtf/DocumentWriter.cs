@@ -264,7 +264,7 @@ namespace MsgReader.Rtf
                 Info.Clear();
                 FontTable.Clear();
                 ColorTable.Clear();
-                FontTable.Add(Control.DefaultFont.Name);
+                FontTable.Add(SystemFonts.DefaultFont.Name);
             }
             else
             {

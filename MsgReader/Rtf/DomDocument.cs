@@ -30,7 +30,7 @@ namespace MsgReader.Rtf
 		/// <summary>
 		/// default font name
 		/// </summary>
-		private static readonly string DefaultFontName = Control.DefaultFont.Name;
+		private static readonly string DefaultFontName = SystemFonts.DefaultFont.Name;
 		// ReSharper disable once NotAccessedField.Local
 		private int _listTextFlag;
 		private DocumentFormatInfo _paragraphFormat;
@@ -2712,7 +2712,7 @@ namespace MsgReader.Rtf
 							index = reader.Parameter;
 						else if (reader.Keyword == "fnil")
 						{
-							name = Control.DefaultFont.Name;
+							name = SystemFonts.DefaultFont.Name;
 							nilFlag = true;
 						}
 						else if (reader.Keyword == Consts.Fcharset)
@@ -2743,7 +2743,7 @@ namespace MsgReader.Rtf
 
 						name = name.Trim();
 						if (string.IsNullOrEmpty(name))
-							name = Control.DefaultFont.Name;
+							name = SystemFonts.DefaultFont.Name;
 
 						var font = new Font(index, name) { Charset = charset, NilFlag = nilFlag };
 						FontTable.Add(font);
