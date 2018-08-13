@@ -13,6 +13,8 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 */
+using System.Text;
+
 namespace MsgReader.Outlook
 {
     /// <summary>
@@ -30,6 +32,10 @@ namespace MsgReader.Outlook
         {
             if (string.IsNullOrEmpty(rtf))
                 return string.Empty;
+
+            Encoding encoding = Encoding.ASCII;
+            byte[] bytes = encoding.GetBytes(rtf);
+            rtf = encoding.GetString(bytes);
 
             var html = RtfPipe.Rtf.ToHtml(rtf.Trim('\0'));
             return html;
