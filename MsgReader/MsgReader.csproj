@@ -92,30 +92,10 @@ The EML reader supports MIME 1.0 encoded files</Description>
     <Compile Include="Helpers\StreamHelpers.cs" />
     <Compile Include="Helpers\StreamUtility.cs" />
     <Compile Include="Helpers\Strings.cs" />
-    <Compile Include="Localization\LanguageConsts.zh-CN.Designer.cs">
-      <DependentUpon>LanguageConsts.zh-CN.resx</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-    </Compile>
-    <Compile Include="Localization\LanguageConsts.fr.Designer.cs">
-      <DependentUpon>LanguageConsts.fr.resx</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-    </Compile>
-    <Compile Include="Localization\LanguageConsts.de.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>LanguageConsts.de.resx</DependentUpon>
-    </Compile>
     <Compile Include="Localization\LanguageConsts.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>LanguageConsts.resx</DependentUpon>
-    </Compile>
-    <Compile Include="Localization\LanguageConsts.nl.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>LanguageConsts.nl.resx</DependentUpon>
     </Compile>
     <Compile Include="Mime\Decode\Base64.cs" />
     <Compile Include="Mime\Decode\EncodedWord.cs" />
