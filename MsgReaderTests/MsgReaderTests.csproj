@@ -63,31 +63,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="SampleFiles\HtmlSampleEmail.msg">
+    <Content Include="SampleFiles\**">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="SampleFiles\RtfSampleEmail.msg">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="SampleFiles\TxtSampleEmail.msg">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="SampleFiles\HtmlSampleEmailWithAttachment.msg">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="SampleFiles\RtfSampleEmailWithAttachment.msg">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="SampleFiles\TxtSampleEmailWithAttachment.msg">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="SampleFiles\EmailWithAttachments.msg">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
   </ItemGroup>
   <ItemGroup />
   <Choose>
