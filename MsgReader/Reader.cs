@@ -15,6 +15,7 @@ using MsgReader.Helpers;
 using MsgReader.Localization;
 using MsgReader.Mime.Header;
 using MsgReader.Outlook;
+using System.Drawing;
 // ReSharper disable FunctionComplexityOverflow
 
 /*
@@ -1948,11 +1949,17 @@ namespace MsgReader
                 if (htmlBody && renderingPosition != -1 && body.Contains(rtfInlineObject))
                 {
                     if (!isInline)
-                        using (var icon = FileIcon.GetFileIcon(fileInfo.FullName))
+                        using (var icon = Icon.ExtractAssociatedIcon(fileInfo.FullName))
+                        using (var iconStream = new MemoryStream())
                         {
-                            var iconFileName = outputFolder + Guid.NewGuid() + ".png";
-                            icon.Save(iconFileName, ImageFormat.Png);
-                            inlineAttachments.Add(new InlineAttachment(iconFileName, attachmentFileName, fileInfo.FullName));
+                            icon.Save(iconStream);
+                            using (var image = Image.FromStream(iconStream))
+                            {
+                                var iconFileName = outputFolder + Guid.NewGuid() + ".png";
+                                image.Save(iconFileName, ImageFormat.Png);
+                                inlineAttachments.Add(new InlineAttachment(iconFileName, attachmentFileName, 
+                                    fileInfo.FullName));
+                            }
                         }
                     else
                         inlineAttachments.Add(new InlineAttachment(renderingPosition, attachmentFileName));

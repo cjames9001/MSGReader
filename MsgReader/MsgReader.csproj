@@ -155,7 +155,6 @@ The EML reader supports MIME 1.0 encoded files</Description>
     <Compile Include="Outlook\Recipient.cs" />
     <Compile Include="Outlook\RecipientPlaceHolder.cs" />
     <Compile Include="Outlook\RtfDecompressor.cs" />
-    <Compile Include="Helpers\FileIcon.cs" />
     <Compile Include="Outlook\SenderRepresenting.cs" />
     <Compile Include="Outlook\Sender.cs" />
     <Compile Include="Outlook\Storage.cs" />
