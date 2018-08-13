@@ -1,3 +1,29 @@
+//
+// Reader.cs
+//
+// Author: Kees van Spelde <sicos2002@hotmail.com>
+//
+// Copyright (c) 2013-2018 Magic-Sessions. (www.magic-sessions.com)
+//
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+//
+// The above copyright notice and this permission notice shall be included in
+// all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+// THE SOFTWARE.
+//
+
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -33,12 +59,12 @@ namespace MsgReader.Rtf
         /// <summary>
         /// Current token's type
         /// </summary>
-        public RtfTokenType TokenType => CurrentToken == null ? RtfTokenType.None : CurrentToken.Type;
+        public RtfTokenType TokenType => CurrentToken?.Type ?? RtfTokenType.None;
 
         /// <summary>
         /// Current keyword
         /// </summary>
-        public string Keyword => CurrentToken == null ? null : CurrentToken.Key;
+        public string Keyword => CurrentToken?.Key;
 
         /// <summary>
         /// If current token has a parameter
@@ -48,7 +74,7 @@ namespace MsgReader.Rtf
         /// <summary>
         /// Current parameter
         /// </summary>
-        public int Parameter => CurrentToken == null ? 0 : CurrentToken.Param;
+        public int Parameter => CurrentToken?.Param ?? 0;
 
         public int ContentPosition
         {
@@ -56,7 +82,7 @@ namespace MsgReader.Rtf
             {
                 if (_stream == null)
                     return 0;
-                return (int) _stream.Position;
+                return (int)_stream.Position;
             }
         }
 
@@ -87,9 +113,24 @@ namespace MsgReader.Rtf
         /// </summary>
         public int TokenCount { get; set; }
 
-        // ReSharper disable once MemberCanBePrivate.Global
-        public bool EnableDefaultProcess { get; set; }
+        internal bool EnableDefaultProcess { get; set; }
 
+        /// <summary>
+        /// When set to <c>true</c> then we are parsing an RTF unicode
+        /// high - low surrogate
+        /// </summary>
+        internal bool ParsingHighLowSurrogate { get; set; }
+
+        /// <summary>
+        /// When <see cref="ParsingHighLowSurrogate"/> is set to <c>true</c>
+        /// then this will containt the high surrogate value when we are
+        /// parsing the low surrogate value
+        /// </summary>
+        internal int? HighSurrogateValue { get; set; }
+
+        /// <summary>
+        /// <see cref="LayerInfo"/>
+        /// </summary>
         public LayerInfo CurrentLayerInfo
         {
             get
@@ -237,10 +278,10 @@ namespace MsgReader.Rtf
                 case "uc":
                     CurrentLayerInfo.UcValue = Parameter;
                     break;
-				case "u":
-		            if (InnerReader.Peek() == '?')
-			            InnerReader.Read();
-		            break;
+                case "u":
+                    if (InnerReader.Peek() == '?')
+                        InnerReader.Read();
+                    break;
             }
         }
         #endregion
@@ -257,7 +298,7 @@ namespace MsgReader.Rtf
 
             if (LastToken != null && LastToken.Type == RtfTokenType.GroupStart)
                 _firstTokenInGroup = true;
-            
+
             CurrentToken = _lex.NextToken();
             if (CurrentToken == null || CurrentToken.Type == RtfTokenType.Eof)
             {

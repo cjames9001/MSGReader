@@ -3486,8 +3486,43 @@ namespace MsgReader.Rtf
                                             break;
 
                                         case Consts.U:
+
+                                            if (reader.Parameter.ToString().StartsWith("c", StringComparison.InvariantCultureIgnoreCase))
+                                                throw new Exception("\\uc parameter not yet supported, please contact the developer on GitHub");
+
                                             if (reader.Parameter.ToString().StartsWith("-"))
-                                                stringBuilder.Append("&#" + (65536 + int.Parse(reader.Parameter.ToString())) + ";");
+                                            {
+                                                // The Unicode standard permanently reserves these code point values for
+                                                // UTF-16 encoding of the high and low surrogates
+                                                // U+D800 to U+DFFF
+                                                // 55296  -  57343
+
+                                                var value = 65536 + int.Parse(reader.Parameter.ToString());
+
+                                                if (value >= 0xD800 && value <= 0xDFFF)
+                                                {
+                                                    if (!reader.ParsingHighLowSurrogate)
+                                                    {
+                                                        reader.ParsingHighLowSurrogate = true;
+                                                        reader.HighSurrogateValue = value;
+                                                    }
+                                                    else
+                                                    {
+                                                        var combined = ((reader.HighSurrogateValue - 0xD800) << 10) + (value - 0xDC00) + 0x10000;
+                                                        stringBuilder.Append("&#" + combined + ";");
+                                                        reader.ParsingHighLowSurrogate = false;
+                                                        reader.HighSurrogateValue = null;
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    reader.ParsingHighLowSurrogate = false;
+                                                    stringBuilder.Append("&#" + value + ";");
+                                                }
+
+
+
+                                            }
                                             else
                                                 stringBuilder.Append("&#" + reader.Parameter + ";");
                                             break;
